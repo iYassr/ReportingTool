@@ -18,10 +18,10 @@ except Exception:
 
 
 def get_most_populer_articles():
-    query = '''select articles.title, sum(newlog.hits) from articles, 
+    query = '''select articles.title, sum(stats.hits) from articles, 
     (select substr(log.path,10,50) as article_name, count(*) as hits from log  
-    where path like '/article/%' group by path order by hits DESC) as newlog   
-    where articles.slug = newlog.article_name group by articles.title order by sum DESC;'''
+    where path like '/article/%' group by path order by hits DESC) as stats   
+    where articles.slug = stats.article_name group by articles.title order by sum DESC;'''
     cursor = db.cursor()
     cursor.execute(query)
 
@@ -51,6 +51,7 @@ def get_most_errors():
     print('Days were errors > 1% \n')
     for record in cursor:
         print('{} --- {} Errors'.format(record[0], record[1]))
+
 
 
 def main():
