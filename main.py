@@ -3,12 +3,15 @@ import psycopg2
 import logging
 
 '''
-Log analysis Project
+Log Analysis Project
+@yasserd99@gmail.com
 '''
+# set logging to DEBUG mode
 logging.basicConfig(level=logging.DEBUG,
                     format=' %(asctime)s - %(levelname)s - %(message)s')
 db = ''
 
+# connect to db names news
 try:
     db = psycopg2.connect(dbname='news')
 except Exception:
@@ -16,6 +19,10 @@ except Exception:
 
 
 def get_most_populer_articles():
+    """ returns curser with the 3 most populer articles
+     (name, number of views) """
+
+    # original query used by view
     """ query = '''select articles.title, sum(stats.hits) from articles,
     (select substr(log.path,10,50) as article_name, count(*) as hits from log
     where path like '/article/%' group by path order by hits DESC) as stats
@@ -28,6 +35,8 @@ def get_most_populer_articles():
 
 
 def get_most_populer_authors():
+    """ returns curser with most populer authors (name, number of views) """
+
     """ query = '''select authors.name, top_authors.sum from authors,
      (select articles.author, sum(stats.hits) from articles,
       (select substr(log.path,10,50) as article_name,
@@ -43,6 +52,10 @@ def get_most_populer_authors():
 
 
 def get_most_errors():
+    """ return curser with days with > %1 HTTP 404 Page not found Error
+    (day, % of errors if  > 1 )
+    """
+
     """ query = '''  select found.date_trunc, (not_found.count /
     (found.count::numeric)) as error_per
     from  (select DATE_TRUNC('day', time), count(*) from log
@@ -61,6 +74,7 @@ def get_most_errors():
 
 
 def to_print(curser, intro, suffex):
+    """ to print results of the query in a human-readable way"""
 
     print('\n---------------------------------------')
     print('{} \n'.format(intro))
