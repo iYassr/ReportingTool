@@ -51,6 +51,7 @@ No Results
 
 an effort was made to make this tool as simple as possible.
 | Function | Descreption |
+| -------- | ---------- | 
 | get_most_populer_articles() | returns curser with the 3 most populer articles as tuple (name, number of views) |
 | get_most_populer_authors() | returns curser with most populer authors as tuple (name, number of views) |
 | get_errors() | return curser with days with > %1 HTTP 404 Page not found Error (day, % of errors if  > 1 ) |
