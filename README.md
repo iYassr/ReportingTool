@@ -18,7 +18,27 @@ Following these instuctions will get you the Newspapwer Reporting Tool up and ru
 pip8
 
 ### Installation and Running
+- Install VirtualBox
+You can download it from here (Linux, Windows, OSX ) https://www.virtualbox.org/wiki/Download_Old_Builds_5_1
+- install Vagrant
+You can Download it from here (Linux, Windows, OSX)
+https://www.vagrantup.com/downloads.html
+to check if vagrant is succeffully installed, please run 
+`vagrant --versoin` from the command line
+- Download VM Configurations 
+`git clone https://github.com/udacity/fullstack-nanodegree-vm.git 
+cd vagrant
+vagrant up
+vagrant ssh 
+cd /vagrant
+psql
+`
+- Download the database used from here https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
+`cd  /vagrant
+psql -d news -f newsdata.sql
 
+
+- Install Vagrant
 as simple as:
 ```python3 main.py```
 
