@@ -110,6 +110,7 @@ an effort was made to make this tool as simple as possible.
 | get_most_populer_authors() | returns curser with most populer authors as tuple (name, number of views) |
 | get_errors() | return curser with days with > %1 HTTP 404 Page not found Error (day, % of errors if  > 1 ) |
 | to_print() | to print results of the query in a human-readable way  |
+| db_connect() | to connect to database ( db, cursor ) | 
 
 
 ### Views
