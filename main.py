@@ -1,4 +1,4 @@
-#! python3
+#! /usr/env/python3
 import psycopg2
 import logging
 
