@@ -71,8 +71,7 @@ def to_print(db, cursor, intro, suffex):
     cursor.close()
     db.close()
 
-
-def main():
+if __name__ == '__main__':
     intro = {'articles': 'The 3 Most Populer Articles of All Time',
              'authors': 'The Most Populer Authers of All Time',
              'errors': 'Days were Errors > 1%'}
@@ -85,6 +84,3 @@ def main():
 
     db, cursor = get_most_errors()
     to_print(db, cursor, intro['errors'], '% Errors')
-
-
-main()
