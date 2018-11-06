@@ -9,57 +9,67 @@ Log Analysis Project
 # set logging to DEBUG mode
 logging.basicConfig(level=logging.DEBUG,
                     format=' %(asctime)s - %(levelname)s - %(message)s')
-db = ''
 
-# connect to db names news
-try:
-    db = psycopg2.connect(dbname='news')
-except Exception:
-    logging.exception(Exception)
+# connect to db, database name is news by default
+
+
+def db_connect(database_name='news'):
+    """ connects to db and return db,cursor """
+    try:
+        db = psycopg2.connect(dbname=database_name)
+        cursor = db.cursor()
+        return db, cursor
+
+    except Exception:
+        logging.exception(Exception)
 
 
 def get_most_populer_articles():
-    """ returns curser with the 3 most populer articles
+    """ returns cursor with the 3 most populer articles
      (name, number of views) """
 
+    db, cursor = db_connect()
     query = 'select * from most_populer_articles;'
-    cursor = db.cursor()
     cursor.execute(query)
-    return cursor
+    return db, cursor
 
 
 def get_most_populer_authors():
-    """ returns curser with most populer authors (name, number of views) """
+    """ returns cursor with most populer authors (name, number of views) """
+
+    db, cursor = db_connect()
     query = 'select * from most_populer_authors;'
-    cursor = db.cursor()
     cursor.execute(query)
-    return cursor
+    return db, cursor
 
 
 def get_most_errors():
-    """ return curser with days with > %1 HTTP 404 Page not found Error
+    """ return cursor with days with > %1 HTTP 404 Page not found Error
     (day, % of errors if  > 1 )
     """
+
+    db, cursor = db_connect()
     query = 'select * from most_errors;'
-    cursor = db.cursor()
     cursor.execute(query)
-    return cursor
+    return db, cursor
 
 
-def to_print(curser, intro, suffex):
+def to_print(db, cursor, intro, suffex):
     """ to print results of the query in a human-readable way"""
 
     print('\n---------------------------------------')
     print('{} \n'.format(intro))
 
-    if curser.rowcount == 0:
+    if cursor.rowcount == 0:
         print('No Results')
         return
 
-    for record in curser:
+    for record in cursor:
         print(
             '{} --- {} {}'.format(str(record[0]).ljust(35),
                                   str(record[1]).ljust(10), suffex))
+    cursor.close()
+    db.close()
 
 
 def main():
@@ -67,9 +77,14 @@ def main():
              'authors': 'The Most Populer Authers of All Time',
              'errors': 'Days were Errors > 1%'}
 
-    to_print(get_most_populer_articles(), intro['articles'], suffex=' Views')
-    to_print(get_most_populer_authors(), intro['authors'], ' Views')
-    to_print(get_most_errors(), intro['errors'], '% Errors')
+    db, cursor = get_most_populer_articles()
+    to_print(db, cursor, intro['articles'], suffex=' Views')
+
+    db, cursor = get_most_populer_authors()
+    to_print(db, cursor, intro['authors'], ' Views')
+
+    db, cursor = get_most_errors()
+    to_print(db, cursor, intro['errors'], '% Errors')
 
 
 main()
