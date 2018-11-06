@@ -63,7 +63,7 @@ an effort was made to make this tool as simple as possible.
 
 get_most_populer_articles()
 ```
-CREATE VIEW get_most_popular_articles as select articles.title, sum(stats.hits) from articles,
+CREATE VIEW most_popular_articles as select articles.title, sum(stats.hits) from articles,
     (select substr(log.path,10,50) as article_name, count(*) as hits from log
     where path like '/article/%' group by path order by hits DESC) as stats
     where articles.slug = stats.article_name group by articles.title
@@ -72,7 +72,7 @@ CREATE VIEW get_most_popular_articles as select articles.title, sum(stats.hits) 
 
 get_most_popular_authors()
 ```
-CREATE VIEW get_most_popular_authors as select authors.name, top_authors.sum from authors,
+CREATE VIEW most_popular_authors as select authors.name, top_authors.sum from authors,
      (select articles.author, sum(stats.hits) from articles,
       (select substr(log.path,10,50) as article_name,
       count(*) as hits from log where path like '/article/%'
@@ -85,7 +85,7 @@ CREATE VIEW get_most_popular_authors as select authors.name, top_authors.sum fro
 get_errors()
 
 ```
-CREATE VIEW get_errors as select found.date_trunc, (not_found.count /
+CREATE VIEW most_errors as select found.date_trunc, (not_found.count /
     (found.count::numeric)) as error_per
     from  (select DATE_TRUNC('day', time), count(*) from log
     where status like '4%'
