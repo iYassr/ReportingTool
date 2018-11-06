@@ -83,4 +83,4 @@ if __name__ == '__main__':
     to_print(db, cursor, intro['authors'], ' Views')
 
     db, cursor = get_most_errors()
-    to_print(db, cursor, intro['errors'], '% Errors')
+    to_print(db, cursor, intro['errors'], '%')

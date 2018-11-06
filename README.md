@@ -64,8 +64,8 @@ an effort was made to make this tool as simple as possible.
 get_most_populer_articles()
 ```
 CREATE VIEW most_popular_articles as select articles.title, sum(stats.hits) from articles,
-    (select substr(log.path,10,50) as article_name, count(*) as hits from log
-    where path like '/article/%' group by path order by hits DESC) as stats
+        (select substr(log.path,10,50) as article_name, count(*) as hits from log
+        where path like '/article/%' group by path order by hits DESC) as stats
     where articles.slug = stats.article_name group by articles.title
     order by sum DESC LIMIT 3;
 ```
@@ -73,28 +73,25 @@ CREATE VIEW most_popular_articles as select articles.title, sum(stats.hits) from
 get_most_popular_authors()
 ```
 CREATE VIEW most_popular_authors as select authors.name, top_authors.sum from authors,
-     (select articles.author, sum(stats.hits) from articles,
-      (select substr(log.path,10,50) as article_name,
-      count(*) as hits from log where path like '/article/%'
-       group by path order by hits DESC) as stats
-       where articles.slug = stats.article_name group by articles.author
-       order by sum DESC) AS top_authors
-       where authors.id = top_authors.author;
+        (select articles.author, sum(stats.hits) from articles,
+            (select substr(log.path,10,50) as article_name,
+            count(*) as hits from log where path like '/article/%'
+            group by path order by hits DESC) as stats
+            where articles.slug = stats.article_name group by articles.author
+            order by sum DESC) AS top_authors
+        where authors.id = top_authors.author;
 ```
 
 get_errors()
 
 ```
-CREATE VIEW most_errors as select found.date_trunc, (not_found.count /
-    (found.count::numeric)) as error_per
-    from  (select DATE_TRUNC('day', time), count(*) from log
-    where status like '4%'
-    group by DATE_TRUNC('day', time) order by count DESC) as not_found,
-    (select DATE_TRUNC('day', time), count(*) from log
-     where status not like '4%'
-     group by DATE_TRUNC('day', time) order by count DESC) as found
-     where found.date_trunc = not_found.date_trunc
-     and (not_found.count / (found.count::numeric)) > 1;
+CREATE VIEW most_errors as select to_char(date, 'FMMonth FMDD, YYYY'), err/total as ratio
+       from (select time::date as date,
+                    count(*) as total,
+                    sum((status != '200 OK')::int)::float as err
+                    from log
+                    group by date) as errors
+       where err/total > 0.01;
 ```
 
 ## Author
