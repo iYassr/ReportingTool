@@ -13,7 +13,7 @@ pip8
 ### Installation
 1.  Install VirtualBox  
 You can download it from here (Linux, Windows, OSX ) https://www.virtualbox.org/wiki/Download_Old_Builds_5_1  
-2. install Vagrant  
+2. Install Vagrant  
 You can Download it from here (Linux, Windows, OSX)  
 https://www.vagrantup.com/downloads.html  
 to check if vagrant is succeffully installed, please run  
@@ -25,21 +25,21 @@ to check if vagrant is succeffully installed, please run
 `$ git clone https://github.com/iYassr/ReportingTool.git`  
 move folder 'Reporting Tool' into ' the cloned folder 'vagrant' - step 4 -   
 
-5.  Download the database  
+5.  Download the News Database  
 You can find it here https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip  
 unzip the file and move content to the cloned folder 'vagrant' - step 4 -  
-6. Run Vagrant Instance and ssh to it  
+6. Run Vagrant Instance and SSH to it  
 ```
 $ cd vagrant # cd to the cloned project folder  
 $ vagrant up # wait until finished, it might take more that few minitus  
 $ vagrant ssh # ssh to the already configured vm  
 $ cd /vagrant  
 ```
-7. import news database into postgres server  
+7. Import News Database Into Postgresql Server  
 ```
 $ psql -d news -f newsdata.sql # create tables and import data from newsdata.sql to news db  
 ```
-8. Create used views using psql shell  
+8. Create Used Views Using Psql Shell  
 
 ```
 $ psql news # access news db from psql interactive shell  
@@ -76,7 +76,7 @@ $ python3 main.py           # run the program
 ```
 
 
-### Usage
+### Example
 
 ``` 
 python3 main.py
