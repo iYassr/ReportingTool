@@ -31,30 +31,6 @@ def get_results(query):
     return results
 
 
-def get_most_populer_articles():
-    """ returns cursor with the 3 most popular articles
-     (name, number of views) """
-
-    query = 'select * from most_popular_articles;'
-    return get_results(query)
-
-
-def get_most_populer_authors():
-    """ returns cursor with most popular authors (name, number of views) """
-
-    query = 'select * from most_popular_authors;'
-    return get_results(query)
-
-
-def get_most_errors():
-    """ return cursor with days with > %1 HTTP 404 Page not found Error
-    (day, % of errors if  > 1 )
-    """
-
-    query = 'select * from most_errors;'
-    return get_results(query)
-
-
 def to_print(cursor, intro, suffex):
     """ to print results of the query in a human-readable way"""
 
