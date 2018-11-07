@@ -71,7 +71,11 @@ if __name__ == '__main__':
     intro = {'articles': 'The 3 Most Popular Articles of All Time',
              'authors': 'The Most Popular Authers of All Time',
              'errors': 'Days were Errors > 1%'}
+    query = {'articles': 'select * from most_popular_articles;',
+             'authors': 'select * from most_popular_authors;',
+             'errors': 'select * from most_errors;'}
 
-    to_print(get_most_populer_articles(), intro['articles'], suffex=' Views')
-    to_print(get_most_populer_authors(), intro['authors'], ' Views')
-    to_print(get_most_errors(), intro['errors'], '%')
+    to_print(get_results(query['articles']),
+             intro['articles'], suffex=' Views')
+    to_print(get_results(query['authors']), intro['authors'], ' Views')
+    to_print(get_results(query['errors']), intro['errors'], '%')
