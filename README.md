@@ -82,14 +82,14 @@ $ python3 main.py           # run the program
 python3 main.py
 ---------------------------------------
 
-The 3 Most Populer Articles of All Time 
+The 3 Most Popular Articles of All Time 
 
 Candidate is jerk, alleges rival    --- 338647      Views
 Bears love berries, alleges bear    --- 253801      Views
 Bad things gone, say good people    --- 170098      Views
 
 ---------------------------------------
-The Most Populer Authers of All Time 
+The Most Popular Authers of All Time 
 
 Ursula La Multa                     --- 507594      Views
 Rudolf von Treppenwitz              --- 423457      Views
