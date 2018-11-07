@@ -25,7 +25,7 @@ def db_connect(database_name='news'):
 
 
 def get_most_populer_articles():
-    """ returns cursor with the 3 most populer articles
+    """ returns cursor with the 3 most popular articles
      (name, number of views) """
 
     db, cursor = db_connect()
@@ -35,10 +35,10 @@ def get_most_populer_articles():
 
 
 def get_most_populer_authors():
-    """ returns cursor with most populer authors (name, number of views) """
+    """ returns cursor with most popular authors (name, number of views) """
 
     db, cursor = db_connect()
-    query = 'select * from most_populer_authors;'
+    query = 'select * from most_popular_authors;'
     cursor.execute(query)
     return db, cursor
 

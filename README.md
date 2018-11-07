@@ -81,6 +81,7 @@ $ python3 main.py           # run the program
 ``` 
 python3 main.py
 ---------------------------------------
+
 The 3 Most Populer Articles of All Time 
 
 Candidate is jerk, alleges rival    --- 338647      Views
@@ -90,14 +91,15 @@ Bad things gone, say good people    --- 170098      Views
 ---------------------------------------
 The Most Populer Authers of All Time 
 
-Candidate is jerk, alleges rival    --- 338647      Views
-Bears love berries, alleges bear    --- 253801      Views
-Bad things gone, say good people    --- 170098      Views
+Ursula La Multa                     --- 507594      Views
+Rudolf von Treppenwitz              --- 423457      Views
+Anonymous Contributor               --- 170098      Views
+Markoff Chaney                      --- 84557       Views
 
 ---------------------------------------
 Days were Errors > 1% 
 
-July 17, 2016                       --- 0.0226268624680273 %
+July 17, 2016                       --- 2.26268624680273 %
 ```
 
 ## Design
@@ -106,8 +108,8 @@ an effort was made to make this tool as simple as possible.
 
 | Function | Descreption |
 | --------------------------------------- | -------------------------------------------------------------- |
-| get_most_populer_articles() | returns curser with the 3 most populer articles as tuple (name, number of views) |
-| get_most_populer_authors() | returns curser with most populer authors as tuple (name, number of views) |
+| get_most_popular_articles() | returns curser with the 3 most populor articles as tuple (name, number of views) |
+| get_most_popular_authors() | returns curser with most popular authors as tuple (name, number of views) |
 | get_errors() | return curser with days with > %1 HTTP 404 Page not found Error (day, % of errors if  > 1 ) |
 | to_print() | to print results of the query in a human-readable way  |
 | db_connect() | to connect to database ( db, cursor ) | 
@@ -115,7 +117,7 @@ an effort was made to make this tool as simple as possible.
 
 ### Views
 
-get_most_populer_articles()
+get_most_popular_articles()
 ```
 CREATE VIEW most_popular_articles as select articles.title, sum(stats.hits) from articles,
         (select substr(log.path,10,50) as article_name, count(*) as hits from log
@@ -139,7 +141,7 @@ CREATE VIEW most_popular_authors as select authors.name, top_authors.sum from au
 get_errors()
 
 ```
-CREATE VIEW most_errors as select to_char(date, 'FMMonth FMDD, YYYY'), err/total as ratio
+CREATE VIEW most_errors as select to_char(date, 'FMMonth FMDD, YYYY'), err/total * 100 as ratio
        from (select time::date as date,
                     count(*) as total,
                     sum((status != '200 OK')::int)::float as err
