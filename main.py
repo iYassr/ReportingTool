@@ -72,8 +72,8 @@ def to_print(db, cursor, intro, suffex):
     db.close()
 
 if __name__ == '__main__':
-    intro = {'articles': 'The 3 Most Populer Articles of All Time',
-             'authors': 'The Most Populer Authers of All Time',
+    intro = {'articles': 'The 3 Most Popular Articles of All Time',
+             'authors': 'The Most Popular Authers of All Time',
              'errors': 'Days were Errors > 1%'}
 
     db, cursor = get_most_populer_articles()
