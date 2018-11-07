@@ -10,9 +10,8 @@ Log Analysis Project
 logging.basicConfig(level=logging.DEBUG,
                     format=' %(asctime)s - %(levelname)s - %(message)s')
 
+
 # connect to db, database name is news by default
-
-
 def db_connect(database_name='news'):
     """ connects to db and return db,cursor """
     try:
@@ -70,6 +69,7 @@ def to_print(db, cursor, intro, suffex):
                                   str(record[1]).ljust(10), suffex))
     cursor.close()
     db.close()
+
 
 if __name__ == '__main__':
     intro = {'articles': 'The 3 Most Popular Articles of All Time',
