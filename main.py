@@ -23,23 +23,27 @@ def db_connect(database_name='news'):
         logging.exception(Exception)
 
 
+def get_results(query):
+    db, cursor = db_connect()
+    cursor.execute(query)
+    results = cursor.fetchall()
+    db.close()
+    return results
+
+
 def get_most_populer_articles():
     """ returns cursor with the 3 most popular articles
      (name, number of views) """
 
-    db, cursor = db_connect()
     query = 'select * from most_popular_articles;'
-    cursor.execute(query)
-    return db, cursor
+    return get_results(query)
 
 
 def get_most_populer_authors():
     """ returns cursor with most popular authors (name, number of views) """
 
-    db, cursor = db_connect()
     query = 'select * from most_popular_authors;'
-    cursor.execute(query)
-    return db, cursor
+    return get_results(query)
 
 
 def get_most_errors():
@@ -47,28 +51,20 @@ def get_most_errors():
     (day, % of errors if  > 1 )
     """
 
-    db, cursor = db_connect()
     query = 'select * from most_errors;'
-    cursor.execute(query)
-    return db, cursor
+    return get_results(query)
 
 
-def to_print(db, cursor, intro, suffex):
+def to_print(cursor, intro, suffex):
     """ to print results of the query in a human-readable way"""
 
     print('\n---------------------------------------')
     print('{} \n'.format(intro))
 
-    if cursor.rowcount == 0:
-        print('No Results')
-        return
-
     for record in cursor:
         print(
             '{} --- {} {}'.format(str(record[0]).ljust(35),
                                   str(record[1]).ljust(10), suffex))
-    cursor.close()
-    db.close()
 
 
 if __name__ == '__main__':
@@ -76,11 +72,6 @@ if __name__ == '__main__':
              'authors': 'The Most Popular Authers of All Time',
              'errors': 'Days were Errors > 1%'}
 
-    db, cursor = get_most_populer_articles()
-    to_print(db, cursor, intro['articles'], suffex=' Views')
-
-    db, cursor = get_most_populer_authors()
-    to_print(db, cursor, intro['authors'], ' Views')
-
-    db, cursor = get_most_errors()
-    to_print(db, cursor, intro['errors'], '%')
+    to_print(get_most_populer_articles(), intro['articles'], suffex=' Views')
+    to_print(get_most_populer_authors(), intro['authors'], ' Views')
+    to_print(get_most_errors(), intro['errors'], '%')
