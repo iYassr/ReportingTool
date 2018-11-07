@@ -29,7 +29,7 @@ def get_most_populer_articles():
      (name, number of views) """
 
     db, cursor = db_connect()
-    query = 'select * from most_populer_articles;'
+    query = 'select * from most_popular_articles;'
     cursor.execute(query)
     return db, cursor
 
